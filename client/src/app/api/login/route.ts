@@ -4,12 +4,15 @@ import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
 
 export async function POST (request: Request): Promise<NextResponse> {
+  console.log('LOGIN_INIT');
   if (process.env.JWT_SECRET === undefined || process.env.JWT_SECRET === null) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 
   const resJSON = await request.json();
   const { username, password }: LoginUser = resJSON;
+
+  console.log('RES_JSON: ', resJSON);
 
   const client = getClient();
   await client.connect();
@@ -19,12 +22,16 @@ export async function POST (request: Request): Promise<NextResponse> {
     [username]
   );
 
+  console.log('LOGGED_USER_RES: ', loggedUserRes);
   if (loggedUserRes.rowCount !== null && loggedUserRes.rowCount === 0) {
     return NextResponse.json({ error: 'User does not exist' }, { status: 404 });
   }
 
   const hash: string = loggedUserRes.rows[0].password;
+  console.log('HASH: ', hash);
   const match = await bcrypt.compare(password, hash);
+
+  console.log('MATCH?: ', match);
 
   if (!match) {
     return NextResponse.json({ error: 'Incorrect password' }, { status: 403 });
