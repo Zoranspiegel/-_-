@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import MyButton from '@/app/components/MyButton';
@@ -9,6 +10,7 @@ const userInitialState: LoginUser = {
 };
 
 export default function LoginForm (): JSX.Element {
+  const router = useRouter();
   const [userState, setUserState] = useState<LoginUser>(userInitialState);
   const [errorState, setErrorState] = useState<string[]>([]);
 
@@ -22,8 +24,16 @@ export default function LoginForm (): JSX.Element {
     e.preventDefault();
     setErrorState([]);
 
-    alert(`USER: ${userState.username}\nPASS: ${userState.password}`);
-    setUserState(userInitialState);
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify(userState)
+    });
+    if (res.ok) {
+      router.push('/feed');
+    } else {
+      const resJSON = await res.json();
+      setErrorState(prevState => [...prevState, resJSON.error]);
+    }
   }
 
   return (

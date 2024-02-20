@@ -4,12 +4,12 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export async function POST (request: Request): Promise<NextResponse> {
-  const reqJSON = await request.json();
-  const { username, password } = reqJSON;
-
   if (process.env.JWT_SECRET === undefined || process.env.JWT_SECRET === null) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
+
+  const reqJSON = await request.json();
+  const { username, password }: SignupUser = reqJSON;
 
   const client = getClient();
   await client.connect();
@@ -36,9 +36,9 @@ export async function POST (request: Request): Promise<NextResponse> {
 
   await client.end();
 
-  const userID = newUserRes.rows[0].id;
+  const jwtSub = { id: newUserRes.rows[0].id };
   const jwtSecret = process.env.JWT_SECRET;
-  const token: string = jwt.sign(userID, jwtSecret, { expiresIn: '2h' });
+  const token: string = jwt.sign(jwtSub, jwtSecret, { expiresIn: '2h' });
 
   const response = NextResponse.json({ msg: 'Register success' }, { status: 201 });
   response.cookies.set('jwt-token', token, {
