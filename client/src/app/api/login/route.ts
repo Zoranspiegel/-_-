@@ -32,16 +32,16 @@ export async function POST (request: Request): Promise<NextResponse> {
 
   await client.end();
 
-  const jwtSub = { id: loggedUserRes.rows[0].id };
-  const jwtSecret: string = process.env.JWT_SECRET;
-  const token = jwt.sign(jwtSub, jwtSecret, { expiresIn: '2h' });
+  // const jwtSub = { id: loggedUserRes.rows[0].id };
+  // const jwtSecret: string = process.env.JWT_SECRET;
+  // const token = jwt.sign(jwtSub, jwtSecret, { expiresIn: '2h' });
 
-  const response = NextResponse.json({}, { status: 200 });
-  response.cookies.set('jwt-token', token, {
-    sameSite: 'strict',
-    httpOnly: true,
-    secure: true
-  });
+  const response = NextResponse.json({ msg: 'Login success' }, { status: 200 });
+  // response.cookies.set('jwt-token', token, {
+  //   sameSite: 'strict',
+  //   httpOnly: true,
+  //   secure: true
+  // });
 
   return response;
 }

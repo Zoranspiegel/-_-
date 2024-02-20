@@ -5,8 +5,6 @@ const appDir = process.cwd();
 loadEnvConfig(appDir);
 
 export function getClient (): Client {
-  console.log('PG_URL: ', process.env.POSTGRES_URL);
-  console.log('JWT_SECRET: ', process.env.JWT_SECRET);
   if (process.env.POSTGRES_URL !== null && process.env.POSTGRES_URL !== undefined) {
     const client = new Client({
       connectionString: process.env.POSTGRES_URL + '?sslmode=require'
