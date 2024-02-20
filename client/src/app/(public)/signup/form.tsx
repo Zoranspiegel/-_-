@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import MyButton from '@/app/components/MyButton';
@@ -12,6 +13,7 @@ const userInitialState: SignupUser = {
 export default function SignupForm (): JSX.Element {
   const [userState, setUserState] = useState<SignupUser>(userInitialState);
   const [errorState, setErrorState] = useState<string[]>([]);
+  const router = useRouter();
 
   function handleInputChange (e: ChangeEvent<HTMLInputElement>): void {
     setUserState(prevState => {
@@ -26,8 +28,17 @@ export default function SignupForm (): JSX.Element {
     if (userState.password !== userState.confirmPassword) {
       setErrorState(prevState => [...prevState, 'Passwords do not match']);
     }
-    alert(`USER: ${userState.username}\nPASS: ${userState.password}\nCONFIRM: ${userState.confirmPassword}`);
-    setUserState(userInitialState);
+
+    const res = await fetch('/api/signup', {
+      method: 'POST',
+      body: JSON.stringify(userState)
+    });
+    const resJSON = await res.json();
+    if (res.ok) {
+      router.push('/feed');
+    } else {
+      setErrorState(prevState => [...prevState, resJSON.error]);
+    }
   }
 
   return (
@@ -78,9 +89,7 @@ export default function SignupForm (): JSX.Element {
           ))}
         </ul>
       )}
-      <MyButton
-        type='submit'
-      >Sign Up</MyButton>
+      <MyButton type='submit'>Sign Up</MyButton>
     </form>
   );
 }
