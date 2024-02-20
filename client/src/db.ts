@@ -7,7 +7,7 @@ loadEnvConfig(appDir);
 export function getClient (): Client {
   if (process.env.POSTGRES_URL !== null && process.env.POSTGRES_URL !== undefined) {
     const client = new Client({
-      connectionString: process.env.POSTGRES_URL + '?sslmode=require'
+      connectionString: process.env.POSTGRES_URL
     });
     return client;
   } else {
