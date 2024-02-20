@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getClient } from '@/db';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { SignJWT } from 'jose';
 
 export async function POST (request: Request): Promise<NextResponse> {
   if (process.env.JWT_SECRET === undefined || process.env.JWT_SECRET === null) {
@@ -36,9 +36,14 @@ export async function POST (request: Request): Promise<NextResponse> {
 
   await client.end();
 
-  const jwtSub = { id: newUserRes.rows[0].id };
-  const jwtSecret = process.env.JWT_SECRET;
-  const token: string = jwt.sign(jwtSub, jwtSecret, { expiresIn: '2h' });
+  const jwtSub: string = newUserRes.rows[0].id;
+  const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET);
+  const token = await new SignJWT({})
+    .setProtectedHeader({ alg: 'HS256' })
+    .setSubject(jwtSub)
+    .setIssuedAt()
+    .setExpirationTime('2h')
+    .sign(jwtSecret);
 
   const response = NextResponse.json({ msg: 'Register success' }, { status: 201 });
   response.cookies.set('jwt-token', token, {
