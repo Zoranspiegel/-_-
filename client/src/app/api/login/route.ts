@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getClient } from '@/db';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 
 export async function POST (request: Request): Promise<NextResponse> {
   if (process.env.JWT_SECRET === undefined || process.env.JWT_SECRET === null) {
