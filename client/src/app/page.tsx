@@ -7,12 +7,12 @@ export default function Home (): JSX.Element {
         <h1 className=' text-center text-xl font-bold'>Мрачне тајне</h1>
         <Link
           href='/login'
-          className='rounded-sm border-4 border-double border-[green] text-center text-[green] text-lg font-bold py-2 hover:border-black hover:bg-[green] hover:text-black'
-        >Sign up</Link>
+          className='rounded-sm border-4 border-double border-[green] text-center text-[green] font-bold py-2 hover:border-black hover:bg-[green] hover:text-black'
+        >Log in</Link>
         <Link
           href='/signup'
-          className='rounded-sm border-4 border-double border-[green] text-center text-[green] text-lg font-bold py-2 hover:border-black hover:bg-[green] hover:text-black'
-        >Sign in</Link>
+          className='rounded-sm border-4 border-double border-[green] text-center text-[green] font-bold py-2 hover:border-black hover:bg-[green] hover:text-black'
+        >Sign up</Link>
       </div>
     </main>
   );

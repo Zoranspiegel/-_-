@@ -16,6 +16,7 @@
     ],
     "rules": {
         "@typescript-eslint/semi": ["error", "always"],
+        "@typescript-eslint/no-misused-promises": "off",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off"
     }

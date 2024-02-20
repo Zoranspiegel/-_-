@@ -16,7 +16,7 @@ export default function RootLayout ({
 }>): JSX.Element {
   return (
     <html lang="en">
-      <body className={`${font.className} text-[green] bg-cover bg-center select-none`} style={{ backgroundImage: 'url(https://res.cloudinary.com/dkc8xrlg8/image/upload/v1708254931/ASCII%20Images/Sewers.png)' }}>{children}</body>
+      <body className={`${font.className} text-[green] bg-cover bg-center select-none text-lg`} style={{ backgroundImage: 'url(https://res.cloudinary.com/dkc8xrlg8/image/upload/v1708254931/ASCII%20Images/Sewers.png)' }}>{children}</body>
     </html>
   );
 }
