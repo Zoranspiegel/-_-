@@ -22,13 +22,15 @@ export default function Header (): JSX.Element {
         className='flex items-center gap-2'
       >
         <span className='font-bold'>{user.username}</span>
-        <Image
-          src={user.avatar}
-          alt={user.username}
-          width={50}
-          height={50}
-          className='rounded-full'
-        />
+        <div className='border-2 border-[green] border-opacity-30 rounded-full w-[60px] h-[60px] overflow-hidden'>
+          <Image
+            src={user.avatar}
+            alt={user.username}
+            width={60}
+            height={60}
+            className='rounded-full'
+          />
+        </div>
       </Link>
     </header>
   );
