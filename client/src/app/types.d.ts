@@ -16,3 +16,13 @@ interface UserProfile {
   avatar: string
   isAdmin: boolean
 }
+
+interface Post {
+  id: string
+  user_id: string
+  content: string
+  created_at: string
+  updated_at: string
+  username: string
+  avatar: string
+}
