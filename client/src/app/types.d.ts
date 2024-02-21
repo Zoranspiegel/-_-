@@ -9,3 +9,10 @@ interface SignupUser {
 }
 
 type LoginUser = Omit<SignupUser, 'confirmPassword'>;
+
+interface UserProfile {
+  id: string
+  username: string
+  avatar: string
+  isAdmin: boolean
+}
