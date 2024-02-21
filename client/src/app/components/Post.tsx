@@ -20,20 +20,19 @@ export default function Post ({
     <div className='flex gap-4 mb-4'>
       <Link
         href={personal ? '/account' : `/${post.username}`}
-        className='flex flex-col h-[50px] rounded-full'
+        className='flex flex-col h-[60px] rounded-full'
       >
-        {post.avatar && (
-          <Image
-            src={post.avatar}
-            alt={post.username}
-            width={50}
-            height={50}
-            className='rounded-full'
-          />
-        )}
-        {!post.avatar && (
-          <div className='rounded-full bg-[rgba(0,130,0,0.3)] w-[50px] h-[50px]'></div>
-        )}
+        <div className='border-2 border-[green] rounded-full bg-[rgba(0,130,0,0.3)] w-[60px] h-[60px] overflow-hidden'>
+          {post.avatar && (
+            <Image
+              src={post.avatar}
+              alt={post.username}
+              width={60}
+              height={60}
+              className='rounded-full'
+            />
+          )}
+        </div>
       </Link>
       <div className='max-w-xs flex flex-col'>
         <div>

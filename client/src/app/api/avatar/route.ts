@@ -27,7 +27,31 @@ export async function POST (request: Request): Promise<NextResponse> {
     return NextResponse.json({ error }, { status: 500 });
   }
 
-  const newAvatar = result.secure_url;
+  let newAvatar;
+  if (!process.env.IMG_TO_ASCII_API) {
+    newAvatar = result.secure_url;
+  } else {
+    const body = {
+      img_url: result.secure_url,
+      img_name: avatarName,
+      definition: 'high'
+    };
+
+    const res = await fetch(process.env.IMG_TO_ASCII_API, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      newAvatar = result.secure_url;
+    } else {
+      const resJSON = await res.json();
+      newAvatar = resJSON.img;
+    }
+  }
 
   const client = getClient();
   await client.connect();
