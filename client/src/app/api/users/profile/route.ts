@@ -3,8 +3,8 @@ import { getClient } from '@/db';
 import { NextResponse } from 'next/server';
 
 export async function GET (request: Request): Promise<NextResponse> {
-  const payload = await getJWTPayload();
-  const userID = payload?.sub;
+  const jwtPayload = await getJWTPayload();
+  const userID = jwtPayload?.sub;
 
   const client = getClient();
   await client.connect();
