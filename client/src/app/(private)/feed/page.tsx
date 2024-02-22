@@ -12,7 +12,7 @@ export default function Feed (): JSX.Element {
   }
 
   return (
-    <div className='flex flex-col p-4'>
+    <div className='flex flex-col'>
       {posts}
       <MyButton
         onClick={() => { setPage(page + 1); }}
