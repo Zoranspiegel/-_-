@@ -34,7 +34,7 @@ export async function POST (request: Request): Promise<NextResponse> {
     const body = {
       img_url: result.secure_url,
       img_name: avatarName,
-      definition: 'high'
+      definition: 'low'
     };
 
     const res = await fetch(process.env.IMG_TO_ASCII_API, {

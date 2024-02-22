@@ -22,6 +22,7 @@ export default function AccountPage (): JSX.Element {
             alt={user.username}
             width={250}
             height={250}
+            priority
             className='rounded-full'
           />
         )}
