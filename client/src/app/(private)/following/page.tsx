@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import useSWR from 'swr';
 import UsersContainer from '@/app/components/UsersContainer';
@@ -24,9 +23,11 @@ export default function Following (): JSX.Element {
       <div>
         {pages}
       </div>
-      <MyButton
-        onClick={() => { setPage(page + 1); }}
-      >Load more...</MyButton>
+      <div className='flex flex-col pb-4'>
+        <MyButton
+          onClick={() => { setPage(page + 1); }}
+        >Load more...</MyButton>
+      </div>
     </div>
   );
 }
