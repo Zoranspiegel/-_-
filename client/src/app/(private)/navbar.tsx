@@ -6,7 +6,7 @@ export default function NavBar (): JSX.Element {
   const pathname = usePathname();
   return (
     <nav
-      className='w-full max-w-md min-h-20 flex justify-evenly items-center border-4 border-double border-[green] rounded-lg bg-black bg-opacity-70 text-lg'
+      className='w-full max-w-md min-h-20 flex justify-evenly items-center border-4 border-double border-[green] rounded-lg bg-black bg-opacity-70 text-lg font-bold'
     >
       <Link
         href='/feed'
