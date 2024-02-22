@@ -1,17 +1,27 @@
 import MyButton from '@/app/components/MyButton';
 import { useState } from 'react';
-// import { mutate } from 'swr';
+import { mutate } from 'swr';
 
 export default function NewPost (): JSX.Element {
-  const [post, setPost] = useState<string>('');
+  const [content, setContent] = useState<string>('');
 
   function handleChange (e: React.ChangeEvent<HTMLTextAreaElement>): void {
-    setPost(e.target.value);
+    setContent(e.target.value);
   }
 
   async function handleSubmit (e: React.FormEvent): Promise<void> {
     e.preventDefault();
-    alert(post);
+
+    const res = await fetch('/api/posts', {
+      method: 'POST',
+      body: JSON.stringify({ content })
+    });
+
+    if (res.ok) {
+      await mutate((endpoint: string) => endpoint.startsWith('/api/posts'));
+    }
+
+    setContent('');
   }
 
   return (
@@ -21,13 +31,14 @@ export default function NewPost (): JSX.Element {
     >
       <textarea
         rows={4}
-        value={post}
+        value={content}
         onChange={handleChange}
-        className='w-full border-4 border-double border-[green] rounded-lg bg-[green] bg-opacity-20 p-4 resize-none outline-none'
+        placeholder='Reveal your secret...'
+        className='w-full border-4 border-double border-[green] rounded-lg bg-[green] bg-opacity-20 p-4 resize-none outline-none placeholder:text-[green] placeholder:text-opacity-70'
       />
       <MyButton
         type='submit'
-        disabled={post.length === 0}
+        disabled={content.length === 0}
       >Post</MyButton>
     </form>
   );

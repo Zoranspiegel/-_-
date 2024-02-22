@@ -42,3 +42,27 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
 
   return NextResponse.json(userPosts, { status: 200 });
 }
+
+export async function POST (request: Request): Promise<NextResponse> {
+  const reqJSON = await request.json();
+  const { content } = reqJSON;
+
+  const jwtPayload = await getJWTPayload();
+  const userID = jwtPayload?.sub;
+
+  const client = getClient();
+  await client.connect();
+
+  try {
+    await client.query(
+      'insert into posts (user_id, content) values ($1, $2)',
+      [userID, content]
+    );
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+
+  await client.end();
+
+  return NextResponse.json({ msg: 'Post successfully created' }, { status: 201 });
+}
