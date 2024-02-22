@@ -14,18 +14,18 @@ export default function User ({
         href={personal ? '/account' : `/${user.username}`}
         className='flex items-center gap-2'
       >
-        <span className='font-bold'>{user.username}</span>
-        <div className='border-2 border-[green] rounded-full w-[60px] h-[60px] overflow-hidden'>
+        <div className='border-2 border-[green] rounded-full w-[60px] h-[60px] overflow-hidden mb-6'>
           {user.avatar && (
             <Image
-              src={user.avatar}
-              alt={user.username}
-              width={60}
-              height={60}
-              className='rounded-full'
+            src={user.avatar}
+            alt={user.username}
+            width={60}
+            height={60}
+            className='rounded-full'
             />
           )}
         </div>
+        <span className='font-bold'>{user.username}</span>
       </Link>
     </div>
   );

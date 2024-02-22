@@ -12,8 +12,10 @@ export default function Feed (): JSX.Element {
   }
 
   return (
-    <div className='flex flex-col'>
-      {posts}
+    <div className='w-full min-h-full flex flex-col justify-between'>
+      <div>
+        {posts}
+      </div>
       <MyButton
         onClick={() => { setPage(page + 1); }}
       >Load more...</MyButton>

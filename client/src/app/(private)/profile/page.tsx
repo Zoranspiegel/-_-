@@ -13,9 +13,11 @@ export default function Profile (): JSX.Element {
   }
 
   return (
-    <div className='flex flex-col'>
-      <NewPost />
-      {posts}
+    <div className='w-full min-h-full flex flex-col justify-between'>
+      <div>
+        <NewPost />
+        {posts}
+      </div>
       <MyButton
         onClick={() => { setPage(page + 1); }}
       >Load more...</MyButton>

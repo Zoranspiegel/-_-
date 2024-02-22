@@ -10,7 +10,7 @@ export default function UsersContainer ({
   id?: string
   page: number
 }): JSX.Element {
-  const { data, isLoading, error } = useSWR(`${url}${id ? `/${id}/` : ''}?page=${page}`);
+  const { data, isLoading, error } = useSWR(() => `${url}?page=${page}`);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
