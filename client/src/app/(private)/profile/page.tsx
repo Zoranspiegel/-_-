@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import PostsContainer from '@/app/components/PostsContainer';
 import MyButton from '@/app/components/MyButton';
+import NewPost from './new-post';
 
 export default function Profile (): JSX.Element {
   const [page, setPage] = useState<number>(1);
@@ -13,6 +14,7 @@ export default function Profile (): JSX.Element {
 
   return (
     <div className='flex flex-col'>
+      <NewPost />
       {posts}
       <MyButton
         onClick={() => { setPage(page + 1); }}
