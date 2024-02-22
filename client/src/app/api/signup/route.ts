@@ -42,7 +42,7 @@ export async function POST (request: Request): Promise<NextResponse> {
     .setProtectedHeader({ alg: 'HS256' })
     .setSubject(jwtSub)
     .setIssuedAt()
-    .setExpirationTime('2h')
+    .setExpirationTime('20h')
     .sign(jwtSecret);
 
   const response = NextResponse.json({ msg: 'Register success' }, { status: 201 });
