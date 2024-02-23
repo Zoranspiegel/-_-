@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import FollowButton from './FollowButton';
 
 export default function User ({
   user,
@@ -9,12 +10,12 @@ export default function User ({
   personal: boolean
 }): JSX.Element {
   return (
-    <div>
+    <div className='flex justify-between items-center mb-6'>
       <Link
         href={personal ? '/account' : `/${user.username}`}
         className='flex items-center gap-2'
       >
-        <div className='border-2 border-[green] rounded-full w-[60px] h-[60px] overflow-hidden mb-6'>
+        <div className='border-2 border-[green] rounded-full w-[60px] h-[60px] overflow-hidden'>
           {user.avatar && (
             <Image
             src={user.avatar}
@@ -25,8 +26,9 @@ export default function User ({
             />
           )}
         </div>
-        <span className='font-bold'>{user.username}</span>
+        <span className='font-bold text-xl'>{user.username}</span>
       </Link>
+      {!personal && (<FollowButton id={user.id}/>)}
     </div>
   );
 }
