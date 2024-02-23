@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 export async function GET (request: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse> {
   const { searchParams } = new URL(request.nextUrl);
   const page = Number(searchParams.get('page')) || 0;
-  const limit = 5;
+  const limit = 6;
   const offset = page * limit;
 
   const client = getClient();

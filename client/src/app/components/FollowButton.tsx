@@ -1,5 +1,5 @@
 import MyButton from './MyButton';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 export default function FollowButton ({
   id
@@ -11,11 +11,23 @@ export default function FollowButton ({
   if (isLoading || error) return <div></div>;
 
   async function handleFollow (): Promise<void> {
+    const res = await fetch(`/api/follows?user_id=${id}`, {
+      method: 'POST'
+    });
 
+    if (res.ok) {
+      await mutate((key: string) => key.startsWith('/api/follows'));
+    }
   }
 
   async function handleUnfollow (): Promise<void> {
+    const res = await fetch(`/api/follows?user_id=${id}`, {
+      method: 'DELETE'
+    });
 
+    if (res.ok) {
+      await mutate((key: string) => key.startsWith('/api/follows'));
+    }
   }
 
   const following = data > 0;
@@ -23,11 +35,13 @@ export default function FollowButton ({
     <div>
       {following && (
         <MyButton
+          disabled={isLoading}
           onClick={handleUnfollow}
         >Unfollow</MyButton>
       )}
       {!following && (
         <MyButton
+          disabled={isLoading}
           onClick={handleFollow}
         >Follow</MyButton>
       )}
