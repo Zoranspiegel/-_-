@@ -16,7 +16,6 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
   await client.connect();
 
   let pages;
-  let last;
   if (username) {
     const userPostsRes = await client.query(
       `select p.*, u.username, u.avatar from posts p 
@@ -26,16 +25,7 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
       [username, limit, offset]
     );
 
-    const nextPostsRes = await client.query(
-      `select p.*, u.username, u.avatar from posts p 
-      inner join users u on p.user_id = u.id 
-      where u.username ilike $1 
-      order by created_at desc limit $2 offset $3`,
-      [username, 1, offset + limit]
-    );
-
     pages = userPostsRes.rows;
-    last = nextPostsRes.rowCount === 0;
   } else {
     const userPostsRes = await client.query(
       `select p.*, u.username, u.avatar from posts p 
@@ -45,21 +35,12 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
       [userID, limit, offset]
     );
 
-    const nextPostsRes = await client.query(
-      `select p.*, u.username, u.avatar from posts p 
-      inner join users u on p.user_id = u.id 
-      where u.id = $1 
-      order by created_at desc limit $2 offset $3`,
-      [userID, 1, offset + limit]
-    );
-
     pages = userPostsRes.rows;
-    last = nextPostsRes.rowCount === 0;
   }
 
   await client.end();
 
-  return NextResponse.json({ pages, last }, { status: 200 });
+  return NextResponse.json({ pages }, { status: 200 });
 }
 
 export async function POST (request: Request): Promise<NextResponse> {
