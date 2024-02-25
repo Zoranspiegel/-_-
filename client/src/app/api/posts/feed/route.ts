@@ -22,7 +22,18 @@ export async function GET (request: Request): Promise<NextResponse> {
     [userID, limit, offset]
   );
 
+  const nextPostsRes = await client.query(
+    `select p.*, u.username, u.avatar from posts p 
+    inner join users u on p.user_id = u.id 
+    where user_id in (select user_id from follows where follower_id = $1)
+    order by created_at desc limit $2 offset $3`,
+    [userID, 1, offset + limit]
+  );
+
   await client.end();
 
-  return NextResponse.json(feedPostsRes.rows, { status: 200 });
+  const pages = feedPostsRes.rows;
+  const last = nextPostsRes.rowCount === 0;
+
+  return NextResponse.json({ pages, last }, { status: 200 });
 }

@@ -15,7 +15,7 @@ export default function UsersContainer ({
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
 
-  const user: UserProfile[] = data;
+  const user: UserProfile[] = data.pages;
   return (
     <div>
       {user?.map(user => (

@@ -16,7 +16,7 @@ export default function PostsContainer ({
   if (userLoading || isLoading) return <div>Loading...</div>;
   if (userError || error) return <div>Error</div>;
 
-  const posts: Post[] = data;
+  const posts: Post[] = data.pages;
   return (
     <div>
       {posts.map(post => (

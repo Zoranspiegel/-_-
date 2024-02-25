@@ -18,7 +18,18 @@ export async function GET (request: NextRequest, { params }: { params: { id: str
     [params.id, limit, offset]
   );
 
+  const nextUsersRes = await client.query(
+    `select u.id, u.username, u.avatar, is_admin from users u 
+    inner join follows f on f.user_id = u.id 
+    where f.follower_id = $1 
+    order by f.created_at desc limit $2 offset $3`,
+    [params.id, 1, offset + limit]
+  );
+
   await client.end();
 
-  return NextResponse.json(followedUsersRes.rows, { status: 200 });
+  const pages = followedUsersRes.rows;
+  const last = nextUsersRes.rowCount === 0;
+
+  return NextResponse.json({ pages, last }, { status: 200 });
 }
