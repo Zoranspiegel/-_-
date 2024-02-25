@@ -16,31 +16,34 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
   await client.connect();
 
   let pages;
+  let last;
   if (username) {
     const userPostsRes = await client.query(
       `select p.*, u.username, u.avatar from posts p 
       inner join users u on p.user_id = u.id 
       where u.username ilike $1 
       order by created_at desc limit $2 offset $3`,
-      [username, limit, offset]
+      [username, limit + 1, offset]
     );
 
-    pages = userPostsRes.rows;
+    pages = userPostsRes.rows.slice(0, limit);
+    last = userPostsRes.rows.length < limit + 1;
   } else {
     const userPostsRes = await client.query(
       `select p.*, u.username, u.avatar from posts p 
       inner join users u on p.user_id = u.id 
       where u.id = $1 
       order by created_at desc limit $2 offset $3`,
-      [userID, limit, offset]
+      [userID, limit + 1, offset]
     );
 
-    pages = userPostsRes.rows;
+    pages = userPostsRes.rows.slice(0, limit);
+    last = userPostsRes.rows.length < limit + 1;
   }
 
   await client.end();
 
-  return NextResponse.json({ pages }, { status: 200 });
+  return NextResponse.json({ pages, last }, { status: 200 });
 }
 
 export async function POST (request: Request): Promise<NextResponse> {

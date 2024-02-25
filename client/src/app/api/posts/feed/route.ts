@@ -19,12 +19,13 @@ export async function GET (request: Request): Promise<NextResponse> {
     inner join users u on p.user_id = u.id 
     where user_id in (select user_id from follows where follower_id = $1)
     order by created_at desc limit $2 offset $3`,
-    [userID, limit, offset]
+    [userID, limit + 1, offset]
   );
 
   await client.end();
 
-  const pages = feedPostsRes.rows.slice(0, 10);
+  const pages = feedPostsRes.rows.slice(0, limit);
+  const last = feedPostsRes.rows.length < limit + 1;
 
-  return NextResponse.json({ pages }, { status: 200 });
+  return NextResponse.json({ pages, last }, { status: 200 });
 }

@@ -2,7 +2,9 @@ import MyButton from '@/app/components/MyButton';
 import { useState } from 'react';
 import { mutate } from 'swr';
 
-export default function NewPost (): JSX.Element {
+export default function NewPost ({ setLastPage }: {
+  setLastPage: React.Dispatch<React.SetStateAction<boolean>>
+}): JSX.Element {
   const [content, setContent] = useState<string>('');
 
   function handleChange (e: React.ChangeEvent<HTMLTextAreaElement>): void {
@@ -19,6 +21,7 @@ export default function NewPost (): JSX.Element {
 
     if (res.ok) {
       await mutate((endpoint: string) => endpoint.startsWith('/api/posts'));
+      setLastPage(false);
     }
 
     setContent('');
