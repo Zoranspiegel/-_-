@@ -33,7 +33,7 @@ export default function PostsContainer ({
         <Post
           key={post.id}
           post={post}
-          personal={post.id === loggedUser.id}
+          personal={post.user_id === loggedUser.id}
         />
       ))}
     </div>
