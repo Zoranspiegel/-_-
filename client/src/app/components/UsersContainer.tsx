@@ -4,11 +4,15 @@ import User from './User';
 export default function UsersContainer ({
   url,
   id,
-  page
+  page,
+  lastPage,
+  setLastPage
 }: {
   url: string
   id?: string
   page: number
+  lastPage: boolean
+  setLastPage: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element {
   const { data, isLoading, error } = useSWR(() => `${url}?page=${page}`);
 
@@ -16,6 +20,11 @@ export default function UsersContainer ({
   if (error) return <div>Error</div>;
 
   const user: UserProfile[] = data.pages;
+  const last: boolean = data.last;
+
+  if (last && !lastPage) {
+    setLastPage(true);
+  }
   return (
     <div>
       {user?.map(user => (

@@ -15,12 +15,13 @@ export async function GET (request: NextRequest, { params }: { params: { id: str
     inner join follows f on f.follower_id = u.id 
     where f.user_id = $1 
     order by f.created_at desc limit $2 offset $3`,
-    [params.id, limit, offset]
+    [params.id, limit + 1, offset]
   );
 
   await client.end();
 
-  const pages = followedUsersRes.rows;
+  const pages = followedUsersRes.rows.slice(0, limit);
+  const last = followedUsersRes.rows.length < limit + 1;
 
-  return NextResponse.json({ pages }, { status: 200 });
+  return NextResponse.json({ pages, last }, { status: 200 });
 }

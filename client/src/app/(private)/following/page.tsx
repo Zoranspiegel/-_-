@@ -6,6 +6,7 @@ import MyButton from '@/app/components/MyButton';
 
 export default function Following (): JSX.Element {
   const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<boolean>(false);
   const { data, isLoading, error } = useSWR('/api/users/profile');
 
   if (isLoading) return <div>Loading...</div>;
@@ -15,7 +16,16 @@ export default function Following (): JSX.Element {
 
   const pages = [];
   for (let i = 0; i < page; i++) {
-    pages.push(<UsersContainer key={i} page={i} id={loggedUser.id} url={`/api/users/${loggedUser.id}/following`}/>);
+    pages.push(
+      <UsersContainer
+        key={i}
+        page={i}
+        id={loggedUser.id}
+        url={`/api/users/${loggedUser.id}/following`}
+        lastPage={lastPage}
+        setLastPage={setLastPage}
+      />
+    );
   }
 
   return (
@@ -25,6 +35,7 @@ export default function Following (): JSX.Element {
       </div>
       <div className='flex flex-col pb-4'>
         <MyButton
+          disabled={lastPage}
           onClick={() => { setPage(page + 1); }}
         >Load more...</MyButton>
       </div>
