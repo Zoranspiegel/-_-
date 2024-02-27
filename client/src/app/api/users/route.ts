@@ -18,6 +18,7 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
   );
 
   if (!userRes.rowCount) {
+    await client.end();
     return NextResponse.json({ error: 'User does not exist' }, { status: 404 });
   }
 

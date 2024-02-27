@@ -62,6 +62,7 @@ export async function POST (request: Request): Promise<NextResponse> {
       [userID, content]
     );
   } catch (error) {
+    await client.end();
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 

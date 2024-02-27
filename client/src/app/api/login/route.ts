@@ -20,6 +20,7 @@ export async function POST (request: Request): Promise<NextResponse> {
   );
 
   if (loggedUserRes.rowCount !== null && loggedUserRes.rowCount === 0) {
+    await client.end();
     return NextResponse.json({ error: 'User does not exist' }, { status: 404 });
   }
 
@@ -27,6 +28,7 @@ export async function POST (request: Request): Promise<NextResponse> {
   const match = await bcrypt.compare(password, hash);
 
   if (!match) {
+    await client.end();
     return NextResponse.json({ error: 'Incorrect password' }, { status: 403 });
   }
 

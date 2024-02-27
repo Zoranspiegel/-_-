@@ -20,6 +20,7 @@ export async function POST (request: Request): Promise<NextResponse> {
   );
 
   if (alreadyUserRes.rowCount !== null && alreadyUserRes.rowCount > 0) {
+    await client.end();
     return NextResponse.json({ error: 'Username already taken' }, { status: 400 });
   }
 
@@ -31,6 +32,7 @@ export async function POST (request: Request): Promise<NextResponse> {
   );
 
   if (newUserRes.rowCount === null || newUserRes.rowCount === 0) {
+    await client.end();
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 

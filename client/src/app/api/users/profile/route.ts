@@ -15,6 +15,7 @@ export async function GET (request: Request): Promise<NextResponse> {
   );
 
   if (userProfileRes.rowCount === 0) {
+    await client.end();
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
 
