@@ -1,5 +1,5 @@
 'use client';
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useState } from 'react';
 import ProfileHeader from './profile-header';
@@ -13,7 +13,9 @@ export default function UserPage (): JSX.Element {
   const [lastPage, setLastPage] = useState<boolean>(false);
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (error) {
+    notFound();
+  };
 
   const user: UserProfile = data;
 
