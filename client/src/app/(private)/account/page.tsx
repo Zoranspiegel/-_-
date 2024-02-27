@@ -2,6 +2,7 @@
 import useSWR from 'swr';
 import Image from 'next/image';
 import AvatarForm from './avatar-form';
+import LogoutButton from './logout-button';
 
 export default function AccountPage (): JSX.Element {
   const { data, isLoading, error } = useSWR('/api/users/profile');
@@ -11,7 +12,7 @@ export default function AccountPage (): JSX.Element {
 
   const user: UserProfile = data;
   return (
-    <div className='min-w-full flex flex-col flex-grow justify-center items-center gap-6'>
+    <div className='min-w-full flex flex-col flex-grow justify-between items-center p-4 gap-6'>
       <div>
         <h1
           className={`${user.is_admin ? 'text-[red]' : ''} font-bold text-2xl`}
@@ -32,6 +33,7 @@ export default function AccountPage (): JSX.Element {
       <div>
         <AvatarForm userID={user.id} />
       </div>
+      <LogoutButton />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MyButton from '@/app/components/MyButton';
 import { mutate } from 'swr';
 
@@ -10,10 +10,6 @@ interface Avatar {
 export default function AvatarForm ({ userID }: { userID: string }): JSX.Element {
   const [avatar, setAvatar] = useState<Avatar | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(avatar);
-  }, [avatar]);
 
   function handleChange (e: React.ChangeEvent<HTMLInputElement>): void {
     if (!e.target.files || !e.target.files[0]) return;
