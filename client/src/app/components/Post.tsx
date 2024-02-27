@@ -42,7 +42,7 @@ export default function Post ({
           >{post.username}</Link>
         </div>
         <h2 className=' text-opacity-70 text-[green]'>{new Date(post.created_at).toLocaleDateString('en-us', localDateOptions)}</h2>
-        <p className='select-text mt-2'>{post.content}</p>
+        <p className='select-text mt-2 break-words'>{post.content}</p>
       </div>
     </div>
   );

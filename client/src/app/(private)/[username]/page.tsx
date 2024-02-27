@@ -34,14 +34,14 @@ export default function UserPage (): JSX.Element {
   }
 
   return (
-    <div className='w-full'>
+    <div className='w-full min-h-full flex flex-col justify-start'>
       <ProfileHeader
         user={user}
       />
       <div className='my-4'>
         <hr className='border-dotted border-2 border-[green]'/>
       </div>
-      <div className='w-full flex flex-col justify-start pb-4'>
+      <div className='w-full flex flex-grow flex-col justify-between pb-4 overflow-scroll'>
         {pages}
         <MyButton
           disabled={lastPage}

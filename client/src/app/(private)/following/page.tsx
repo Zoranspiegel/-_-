@@ -29,7 +29,7 @@ export default function Following (): JSX.Element {
   }
 
   return (
-    <div className='w-full min-h-full flex flex-col justify-between'>
+    <div className='w-full min-h-full flex flex-col justify-between overflow-scroll'>
       <div>
         {pages}
       </div>

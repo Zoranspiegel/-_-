@@ -30,7 +30,7 @@ export default function NewPost ({ setLastPage }: {
   return (
     <form
       onSubmit={handleSubmit}
-      className='mb-6'
+      className='mb-4'
     >
       <textarea
         rows={4}

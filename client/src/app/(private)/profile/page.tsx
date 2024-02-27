@@ -14,12 +14,10 @@ export default function Profile (): JSX.Element {
   }
 
   return (
-    <div className='w-full min-h-full flex flex-col justify-between'>
-      <div>
-        <NewPost setLastPage={setLastPage} />
+    <div className='w-full min-h-full flex flex-col justify-start'>
+      <NewPost setLastPage={setLastPage} />
+      <div className='flex flex-col flex-grow justify-between pb-4 overflow-scroll'>
         {posts}
-      </div>
-      <div className='flex flex-col pb-4'>
         <MyButton
           disabled={lastPage}
           onClick={() => { setPage(page + 1); }}
