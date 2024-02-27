@@ -23,9 +23,11 @@ export default function PostsContainer ({
   const posts: Post[] = data.pages;
   const last: boolean = data.last;
 
-  if (last && !lastPage) {
-    setLastPage(true);
-  }
+  setTimeout(() => {
+    if (last && !lastPage) {
+      setLastPage(true);
+    }
+  }, 100);
 
   return (
     <div>
