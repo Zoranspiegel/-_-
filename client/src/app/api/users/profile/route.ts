@@ -10,7 +10,7 @@ export async function GET (request: Request): Promise<NextResponse> {
   await client.connect();
 
   const userProfileRes = await client.query(
-    'select id, username, avatar from users where id = $1',
+    'select id, username, avatar, is_admin from users where id = $1',
     [userID]
   );
 

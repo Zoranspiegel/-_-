@@ -18,15 +18,15 @@ export default function User ({
         <div className='border-2 border-[green] rounded-full w-[60px] h-[60px] overflow-hidden'>
           {user.avatar && (
             <Image
-            src={user.avatar}
-            alt={user.username}
-            width={60}
-            height={60}
-            className='rounded-full'
+              src={user.avatar}
+              alt={user.username}
+              width={60}
+              height={60}
+              className='rounded-full'
             />
           )}
         </div>
-        <span className='font-bold text-xl'>{user.username}</span>
+        <span className={`${user.is_admin ? 'text-[red]' : ''} font-bold text-xl`}>{user.username}</span>
       </Link>
       {!personal && (<FollowButton id={user.id}/>)}
     </div>

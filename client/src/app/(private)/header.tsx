@@ -21,8 +21,8 @@ export default function Header (): JSX.Element {
         href='/account'
         className='flex items-center gap-2'
       >
-        <span className='font-bold'>{user.username}</span>
-        <div className='border-2 border-[green] rounded-full w-[60px] h-[60px] overflow-hidden'>
+        <span className={`${user.is_admin ? 'text-[red]' : ''} font-bold`}>{user.username}</span>
+        <div className='w-[60px] h-[60px] border-2 border-[green] rounded-full bg-[green] bg-opacity-30 overflow-hidden'>
           {user.avatar && (
             <Image
               src={user.avatar}

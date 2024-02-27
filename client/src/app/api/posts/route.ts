@@ -19,7 +19,7 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
   let last;
   if (username) {
     const userPostsRes = await client.query(
-      `select p.*, u.username, u.avatar from posts p 
+      `select p.*, u.username, u.avatar, u.is_admin from posts p 
       inner join users u on p.user_id = u.id 
       where u.username ilike $1 
       order by created_at desc limit $2 offset $3`,
@@ -30,7 +30,7 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
     last = userPostsRes.rows.length < limit + 1;
   } else {
     const userPostsRes = await client.query(
-      `select p.*, u.username, u.avatar from posts p 
+      `select p.*, u.username, u.avatar, u.is_admin from posts p 
       inner join users u on p.user_id = u.id 
       where u.id = $1 
       order by created_at desc limit $2 offset $3`,

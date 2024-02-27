@@ -18,7 +18,7 @@ export default function ProfileHeader ({ user }: {
             />
           )}
         </div>
-        <span className='text-xl font-bold'>{user.username}</span>
+        <span className={`${user.is_admin ? 'text-[red]' : ''} text-xl font-bold`}>{user.username}</span>
       </div>
       <FollowButton
         id={user.id}

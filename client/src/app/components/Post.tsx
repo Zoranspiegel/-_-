@@ -38,7 +38,7 @@ export default function Post ({
         <div>
           <Link
             href={personal ? '/account' : `/${post.username}`}
-            className='font-bold text-xl'
+            className={`${post.is_admin ? 'text-[red]' : ''} font-bold text-xl`}
           >{post.username}</Link>
         </div>
         <h2 className=' text-opacity-70 text-[green]'>{new Date(post.created_at).toLocaleDateString('en-us', localDateOptions)}</h2>

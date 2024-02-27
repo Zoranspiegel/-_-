@@ -12,9 +12,11 @@ export default function AccountPage (): JSX.Element {
   const user: UserProfile = data;
   return (
     <div className='min-w-full flex flex-col flex-grow justify-center items-center gap-6'>
-      <h1
-        className={`${user.isAdmin ? 'text-[red]' : ''} font-bold text-2xl`}
-      >{user.username}</h1>
+      <div>
+        <h1
+          className={`${user.is_admin ? 'text-[red]' : ''} font-bold text-2xl`}
+        >{user.username}</h1>
+      </div>
       <div className='border-4 border-double border-[green] rounded-full w-[250px] h-[250px] bg-[green] bg-opacity-20 overflow-hidden'>
         {user.avatar && (
           <Image

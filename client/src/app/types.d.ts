@@ -14,7 +14,7 @@ interface UserProfile {
   id: string
   username: string
   avatar: string
-  isAdmin: boolean
+  is_admin: boolean
 }
 
 interface Post {
@@ -25,4 +25,5 @@ interface Post {
   updated_at: string
   username: string
   avatar: string
+  is_admin: boolean
 }
