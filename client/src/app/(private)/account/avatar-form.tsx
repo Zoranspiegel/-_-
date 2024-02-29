@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import MyButton from '@/app/components/MyButton';
 import { mutate } from 'swr';
 
 interface Avatar {
@@ -78,7 +77,7 @@ export default function AvatarForm ({ userID }: { userID: string }): JSX.Element
           </div>
         </div>
       )}
-      <MyButton
+      <button
         type='submit'
         disabled={avatar === null || loading}
         onClick={() => {
@@ -86,7 +85,8 @@ export default function AvatarForm ({ userID }: { userID: string }): JSX.Element
             setLoading(true);
           }, 200);
         }}
-      >Send</MyButton>
+        className='button'
+      >Send</button>
     </form>
   );
 }

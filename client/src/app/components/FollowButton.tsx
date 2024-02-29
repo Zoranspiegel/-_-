@@ -1,4 +1,3 @@
-import MyButton from './MyButton';
 import useSWR, { mutate } from 'swr';
 
 export default function FollowButton ({
@@ -34,16 +33,18 @@ export default function FollowButton ({
   return (
     <div>
       {following && (
-        <MyButton
+        <button
           disabled={isLoading}
           onClick={handleUnfollow}
-        >Unfollow</MyButton>
+          className='button'
+        >Unfollow</button>
       )}
       {!following && (
-        <MyButton
+        <button
           disabled={isLoading}
           onClick={handleFollow}
-        >Follow</MyButton>
+          className='button'
+        >Follow</button>
       )}
     </div>
   );

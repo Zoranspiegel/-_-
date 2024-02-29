@@ -3,7 +3,6 @@ import { notFound, useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useState } from 'react';
 import ProfileHeader from './profile-header';
-import MyButton from '@/app/components/MyButton';
 import PostsContainer from '@/app/components/PostsContainer';
 
 export default function UserPage (): JSX.Element {
@@ -43,10 +42,11 @@ export default function UserPage (): JSX.Element {
       </div>
       <div className='w-full flex flex-grow flex-col justify-between pb-4 overflow-scroll'>
         {pages}
-        <MyButton
+        <button
           disabled={lastPage}
           onClick={() => { setPage(page + 1); }}
-        >Load More...</MyButton>
+          className='button'
+        >Load More...</button>
       </div>
     </div>
   );

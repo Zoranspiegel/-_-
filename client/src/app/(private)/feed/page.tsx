@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import PostsContainer from '@/app/components/PostsContainer';
-import MyButton from '@/app/components/MyButton';
 import SearchUsers from './search-users';
 import SearchPosts from './search-posts';
 
@@ -50,10 +49,11 @@ export default function Feed (): JSX.Element {
           {posts}
         </div>
         <div className='flex flex-col pb-4'>
-          <MyButton
+          <button
             disabled={lastPage}
             onClick={() => { setPage(page + 1); }}
-          >Load more...</MyButton>
+            className='button'
+          >Load more...</button>
         </div>
       </div>
     </div>

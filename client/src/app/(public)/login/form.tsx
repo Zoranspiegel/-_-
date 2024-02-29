@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import MyButton from '@/app/components/MyButton';
 
 const userInitialState: LoginUser = {
   username: '',
@@ -73,9 +72,10 @@ export default function LoginForm (): JSX.Element {
           ))}
         </ul>
       )}
-      <MyButton
+      <button
         type='submit'
-      >Log In</MyButton>
+        className='button'
+      >Log In</button>
     </form>
   );
 }

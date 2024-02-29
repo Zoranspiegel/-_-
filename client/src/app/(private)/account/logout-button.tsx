@@ -1,4 +1,3 @@
-import MyButton from '@/app/components/MyButton';
 import { useRouter } from 'next/navigation';
 
 export default function LogoutButton (): JSX.Element {
@@ -13,9 +12,10 @@ export default function LogoutButton (): JSX.Element {
 
   return (
     <div className='w-full flex flex-col'>
-      <MyButton
+      <button
         onClick={handleLogOut}
-      >Log out</MyButton>
+        className='button'
+      >Log out</button>
     </div>
   );
 }

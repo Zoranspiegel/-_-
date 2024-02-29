@@ -1,7 +1,3 @@
-interface MyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode
-}
-
 interface SignupUser {
   username: string
   password: string

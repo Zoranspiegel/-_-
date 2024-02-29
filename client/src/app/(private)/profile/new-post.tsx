@@ -1,4 +1,3 @@
-import MyButton from '@/app/components/MyButton';
 import { useState } from 'react';
 import { mutate } from 'swr';
 
@@ -39,10 +38,11 @@ export default function NewPost ({ setLastPage }: {
         placeholder='Reveal your secret...'
         className='w-full border-4 border-double border-[green] rounded-lg bg-[green] bg-opacity-20 p-4 resize-none outline-none placeholder:text-[green] placeholder:text-opacity-70'
       />
-      <MyButton
+      <button
         type='submit'
         disabled={content.length === 0}
-      >Post</MyButton>
+        className='button'
+      >Post</button>
     </form>
   );
 }

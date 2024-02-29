@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import UsersContainer from '@/app/components/UsersContainer';
-import MyButton from '@/app/components/MyButton';
 
 export default function Following (): JSX.Element {
   const [page, setPage] = useState<number>(1);
@@ -34,10 +33,11 @@ export default function Following (): JSX.Element {
         {pages}
       </div>
       <div className='flex flex-col pb-4'>
-        <MyButton
+        <button
           disabled={lastPage}
           onClick={() => { setPage(page + 1); }}
-        >Load more...</MyButton>
+          className='button'
+        >Load more...</button>
       </div>
     </div>
   );

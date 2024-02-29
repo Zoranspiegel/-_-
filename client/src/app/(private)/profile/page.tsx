@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import PostsContainer from '@/app/components/PostsContainer';
-import MyButton from '@/app/components/MyButton';
 import NewPost from './new-post';
 
 export default function Profile (): JSX.Element {
@@ -18,10 +17,11 @@ export default function Profile (): JSX.Element {
       <NewPost setLastPage={setLastPage} />
       <div className='flex flex-col flex-grow justify-between pb-4 overflow-scroll'>
         {posts}
-        <MyButton
+        <button
           disabled={lastPage}
           onClick={() => { setPage(page + 1); }}
-        >Load more...</MyButton>
+          className='button'
+        >Load more...</button>
       </div>
     </div>
   );
