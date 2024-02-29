@@ -36,11 +36,11 @@ body {
 
 @layer components {
   .searchInput {
-    @apply w-full rounded-lg border-4 border-double border-[green] bg-[green] bg-opacity-20 px-4 py-2 outline-none
+    @apply w-full h-12 rounded-lg border-4 border-double border-[green] bg-[green] bg-opacity-20 px-4 py-2 outline-none
         placeholder:text-[green] placeholder:text-opacity-70;
   }
 
-  .buttonStatic {
+  .searchButton {
     @apply border-4 border-double border-[green] rounded-md bg-[rgb(0,30,0)] text-center text-[green] font-bold py-2 px-4
     enabled:hover:border-black enabled:hover:bg-[green] enabled:hover:text-black disabled:border-opacity-50 disabled:text-opacity-50;
   }

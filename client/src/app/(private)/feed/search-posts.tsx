@@ -34,7 +34,7 @@ export default function SearchPosts ({ setSearch }: {
       />
       <div className='absolute right-0 top-0'>
         <button
-          className='buttonStatic'
+          className='searchButton'
           onClick={handleClean}
         >X</button>
       </div>
