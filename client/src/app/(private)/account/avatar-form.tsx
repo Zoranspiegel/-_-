@@ -66,10 +66,10 @@ export default function AvatarForm ({ userID }: { userID: string }): JSX.Element
             onChange={handleChange}
             className='hidden'
           />
-          <div className='mb-4'>
+          <div className='mb-4 w-[20rem] text-center'>
             {(avatar?.name)
               ? (
-                  <span>{avatar.name}</span>
+                  <span className='break-words'>{avatar.name}</span>
                 )
               : (
                   <span>Select File</span>
