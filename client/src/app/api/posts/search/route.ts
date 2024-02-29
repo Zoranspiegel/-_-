@@ -26,8 +26,8 @@ export async function GET (request: Request): Promise<NextResponse> {
 
   await client.end();
 
-  const posts = foundPostsRes.rows.slice(0, limit);
+  const pages = foundPostsRes.rows.slice(0, limit);
   const last = foundPostsRes.rows.length < limit + 1;
 
-  return NextResponse.json({ posts, last }, { status: 200 });
+  return NextResponse.json({ pages, last }, { status: 200 });
 }

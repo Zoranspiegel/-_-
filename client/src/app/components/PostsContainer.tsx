@@ -5,17 +5,19 @@ export default function PostsContainer ({
   page,
   url,
   username,
+  search,
   lastPage,
   setLastPage
 }: {
   page: number
   url: string
   username?: string
+  search?: string
   lastPage: boolean
   setLastPage: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element {
   const { data: loggedUser, isLoading: userLoading, error: userError } = useSWR('/api/users/profile');
-  const { data, isLoading, error } = useSWR(() => `${url}?page=${page}${username ? `&username=${username}` : ''}`);
+  const { data, isLoading, error } = useSWR(() => `${url}?page=${page}${search ? `&content=${search}` : ''}${username ? `&username=${username}` : ''}`);
 
   if (userLoading || isLoading) return <div>Loading...</div>;
   if (userError || error) return <div>Error</div>;
