@@ -4,6 +4,11 @@ import { NextResponse } from 'next/server';
 export async function GET (request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const content = searchParams.get('content');
+
+  if (!content) {
+    return NextResponse.json({ error: 'Missing query parameter content' }, { status: 400 });
+  }
+
   const page = Number(searchParams.get('page')) || 0;
   const limit = 5;
   const offset = limit * page;
