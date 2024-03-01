@@ -78,7 +78,7 @@ export default function SearchUsers (): JSX.Element {
         </div>
       </div>
       {visibility && (
-        <ul className='flex flex-col absolute top-12 right-0 left-0 rounded-lg border-4 border-double border-[green] bg-[rgb(0,30,0)] bg-opacity-90 p-2 gap-2'>
+        <ul className='min-w-[120%] flex flex-col absolute top-12 left-0 rounded-lg border-4 border-double border-[green] bg-[rgb(0,30,0)] bg-opacity-90 p-2 gap-2'>
           {users.map(user => (
             <li
               key={user.id}
