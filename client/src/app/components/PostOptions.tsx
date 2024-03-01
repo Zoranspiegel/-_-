@@ -12,7 +12,7 @@ export default function PostOptions ({ id }: {
 
   useEffect(() => {
     function handleClickOutside (e: MouseEvent): void {
-      if (optionsRef.current && optionsVisibility && !deleteRef.current?.contains(e.target as Node) && !optionsRef.current.contains(e.target as Node)) {
+      if (optionsRef.current && optionsVisibility && !deleteRef.current?.contains(e.target as Node) && !deleteVisibility && !optionsRef.current.contains(e.target as Node)) {
         setOptionsVisibility(false);
       }
     }

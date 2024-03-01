@@ -41,7 +41,7 @@ export default function Post ({
             href={personal ? '/account' : `/${post.username}`}
             className={`${post.is_admin ? 'text-[red]' : ''} font-bold text-xl`}
           >{post.username}</Link>
-          <PostOptions id={post.id}/>
+          {personal && <PostOptions id={post.id}/>}
         </div>
         <h2 className=' text-opacity-70 text-[green]'>{new Date(post.created_at).toLocaleDateString('en-us', localDateOptions)}</h2>
         <p className='select-text mt-2 break-words'>{post.content}</p>
