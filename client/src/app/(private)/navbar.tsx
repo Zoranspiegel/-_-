@@ -10,19 +10,19 @@ export default function NavBar (): JSX.Element {
     >
       <Link
         href='/feed'
-        className={pathname === '/feed' ? 'text-[rgb(180,180,0)]' : ''}
+        className={pathname === '/feed' ? 'text-[rgb(180,0,0)]' : ''}
       >Feed</Link>
       <Link
         href='/profile'
-        className={pathname === '/profile' ? 'text-[rgb(180,180,0)]' : ''}
+        className={pathname === '/profile' ? 'text-[rgb(180,0,0)]' : ''}
       >Profile</Link>
       <Link
         href='/following'
-        className={pathname === '/following' ? 'text-[rgb(180,180,0)]' : ''}
+        className={pathname === '/following' ? 'text-[rgb(180,0,0)]' : ''}
       >Following</Link>
       <Link
         href='/followers'
-        className={pathname === '/followers' ? 'text-[rgb(180,180,0)]' : ''}
+        className={pathname === '/followers' ? 'text-[rgb(180,0,0)]' : ''}
       >Followers</Link>
     </nav>
   );

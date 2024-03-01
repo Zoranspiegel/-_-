@@ -1,4 +1,5 @@
 import useSWR, { mutate } from 'swr';
+import { SlUserFollow, SlUserUnfollow } from 'react-icons/sl';
 
 export default function FollowButton ({
   id
@@ -37,14 +38,18 @@ export default function FollowButton ({
           disabled={isLoading}
           onClick={handleUnfollow}
           className='button'
-        >Unfollow</button>
+        >
+          <SlUserUnfollow size={25} className='text-[rgb(180,0,0)]'/>
+        </button>
       )}
       {!following && (
         <button
           disabled={isLoading}
           onClick={handleFollow}
           className='button'
-        >Follow</button>
+        >
+          <SlUserFollow size={25} />
+        </button>
       )}
     </div>
   );
