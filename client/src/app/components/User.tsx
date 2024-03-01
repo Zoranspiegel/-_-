@@ -11,6 +11,7 @@ export default function User ({
   personal: boolean
 }): JSX.Element {
   const usernameParts = splitUsername(user.username);
+
   return (
     <div className='flex justify-between items-center mb-6'>
       <Link
