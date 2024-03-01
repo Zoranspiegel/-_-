@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import PostOptions from './PostOptions';
 
 const localDateOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -34,12 +35,13 @@ export default function Post ({
           )}
         </div>
       </Link>
-      <div className='max-w-xs flex flex-col'>
-        <div>
+      <div className='w-full max-w-xs flex flex-col'>
+        <div className='flex justify-between items-center'>
           <Link
             href={personal ? '/account' : `/${post.username}`}
             className={`${post.is_admin ? 'text-[red]' : ''} font-bold text-xl`}
           >{post.username}</Link>
+          <PostOptions id={post.id}/>
         </div>
         <h2 className=' text-opacity-70 text-[green]'>{new Date(post.created_at).toLocaleDateString('en-us', localDateOptions)}</h2>
         <p className='select-text mt-2 break-words'>{post.content}</p>
