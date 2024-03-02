@@ -27,6 +27,7 @@ export default function Post ({
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.focus();
+      setContentState(post.content);
     }
   }, [editing]);
 
@@ -34,6 +35,7 @@ export default function Post ({
     function handleInputBlur (): void {
       setTimeout(() => {
         setEditing(false);
+        setContentState(post.content);
       }, 100);
     }
 
