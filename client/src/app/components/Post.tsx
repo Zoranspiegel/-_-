@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import PostOptions from './PostOptions';
+import { BsCheck } from 'react-icons/bs';
+import { useState, useRef, useEffect } from 'react';
+import { mutate } from 'swr';
 
 const localDateOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -17,6 +20,53 @@ export default function Post ({
   post: Post
   personal: boolean
 }): JSX.Element {
+  const [contentState, setContentState] = useState<string>(post.content);
+  const [editing, setEditing] = useState<boolean>(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [editing]);
+
+  useEffect(() => {
+    function handleInputBlur (): void {
+      setTimeout(() => {
+        setEditing(false);
+      }, 100);
+    }
+
+    if (textareaRef.current) {
+      textareaRef.current.addEventListener('blur', handleInputBlur);
+    }
+
+    return () => {
+      if (textareaRef.current) {
+        textareaRef.current.removeEventListener('blur', handleInputBlur);
+      }
+    };
+  });
+
+  function handleChange (e: React.ChangeEvent<HTMLTextAreaElement>): void {
+    setContentState(e.target.value);
+  }
+
+  async function handleEdit (): Promise<void> {
+    if (contentState !== post.content) {
+      const res = await fetch(`/api/posts/${post.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ content: contentState })
+      });
+
+      if (res.ok) {
+        await mutate((endpoint: string) => endpoint.startsWith('/api/posts'));
+      }
+    }
+
+    setEditing(false);
+  }
+
   return (
     <div className='flex gap-4 mb-4'>
       <Link
@@ -41,10 +91,27 @@ export default function Post ({
             href={personal ? '/account' : `/${post.username}`}
             className={`${post.is_admin ? 'text-[red]' : ''} font-bold text-xl`}
           >{post.username}</Link>
-          {personal && <PostOptions id={post.id}/>}
+          {personal && <PostOptions id={post.id} setEditing={setEditing}/>}
         </div>
         <h2 className=' text-opacity-70 text-[green]'>{new Date(post.created_at).toLocaleDateString('en-us', localDateOptions)}</h2>
-        <p className='select-text mt-2 break-words'>{post.content}</p>
+        {!editing && <p className='select-text mt-2 break-words'>{post.content}</p>}
+        {editing && (
+          <div className='relative'>
+            <textarea
+              ref={textareaRef}
+              value={contentState}
+              onChange={handleChange}
+              rows={4}
+              className='w-full border-4 border-double border-[green] rounded-lg bg-[green] bg-opacity-20 p-2 resize-none outline-none'
+            />
+            <button
+              onClick={handleEdit}
+              className='button absolute bottom-2 right-0 p-0 text-xs self-end'
+            >
+              <BsCheck size={20}/>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -2,8 +2,9 @@ import { useEffect, useState, useRef } from 'react';
 import { BsThreeDotsVertical, BsFillTrash3Fill, BsPencilSquare, BsXSquare, BsCheckSquare } from 'react-icons/bs';
 import { mutate } from 'swr';
 
-export default function PostOptions ({ id }: {
+export default function PostOptions ({ id, setEditing }: {
   id: string
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element {
   const optionsRef = useRef<HTMLDivElement>(null);
   const deleteRef = useRef<HTMLDivElement>(null);
@@ -49,6 +50,11 @@ export default function PostOptions ({ id }: {
           className='absolute top-0 right-0 w-10 flex flex-col border-[green] border-4 border-double rounded-md bg-[rgb(0,20,0)] p-2 gap-6'
         >
           <BsPencilSquare
+            // onClick={() => { router.push(`/edit_post/${id}`); }}
+            onClick={() => {
+              setEditing(true);
+              setOptionsVisibility(false);
+            }}
             className='cursor-pointer'
           />
           <BsFillTrash3Fill

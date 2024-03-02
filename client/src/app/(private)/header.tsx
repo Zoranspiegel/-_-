@@ -23,7 +23,7 @@ export default function Header (): JSX.Element {
         href='/account'
         className='flex items-center gap-2'
       >
-        <div className={`w-28 flex flex-wrap ${user.is_admin ? 'text-[red]' : ''} text-xl font-bold`}>
+        <div className={`w-28 flex flex-wrap justify-end ${user.is_admin ? 'text-[red]' : ''} text-xl font-bold`}>
           {usernameParts.map(part => (
             <span
               key={part}

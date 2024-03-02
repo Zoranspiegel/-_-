@@ -2,6 +2,30 @@ import { getJWTPayload } from '@/app/utils/auth';
 import { getClient } from '@/db';
 import { NextResponse } from 'next/server';
 
+export async function GET (request: Request, { params }: { params: { id: string } }): Promise<NextResponse> {
+  const jwtPayload = await getJWTPayload();
+  const client = getClient();
+  await client.connect();
+
+  const foundPostRes = await client.query(
+    `select p.*, u.username, u.avatar, u.is_admin from posts p 
+    inner join users u on p.user_id = u.id 
+    where p.user_id = $1 and p.id = $2`,
+    [jwtPayload?.sub, params.id]
+  );
+
+  if (!foundPostRes.rowCount) {
+    await client.end();
+    return NextResponse.json({ error: 'Post does not exist' }, { status: 404 });
+  }
+
+  await client.end();
+
+  const post = foundPostRes.rows[0];
+
+  return NextResponse.json(post, { status: 200 });
+}
+
 export async function DELETE (request: Request, { params }: { params: { id: string } }): Promise<NextResponse> {
   const jwtPayload = await getJWTPayload();
   const client = getClient();
