@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import type { ChangeEvent, FormEvent } from 'react';
 
 const userInitialState: SignupUser = {
@@ -12,6 +13,8 @@ const userInitialState: SignupUser = {
 export default function SignupForm (): JSX.Element {
   const [userState, setUserState] = useState<SignupUser>(userInitialState);
   const [errorState, setErrorState] = useState<string[]>([]);
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
+  const [confirmVisibility, setConfirmVisibility] = useState<boolean>(false);
   const router = useRouter();
 
   function handleInputChange (e: ChangeEvent<HTMLInputElement>): void {
@@ -53,30 +56,60 @@ export default function SignupForm (): JSX.Element {
           value={userState.username}
           placeholder='User...'
           onChange={handleInputChange}
-          className='border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 px-4 placeholder:text-[rgb(0,90,0)]'
+          className='w-60 border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 px-4 placeholder:text-[rgb(0,90,0)]'
         />
       </div>
       <div className=' flex flex-col'>
         <label className='font-bold'>Password:</label>
-        <input
-          type='password'
-          name='password'
-          value={userState.password}
-          placeholder='Password...'
-          onChange={handleInputChange}
-          className='border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 px-4 placeholder:text-[rgb(0,90,0)]'
-        />
+        <div className='relative'>
+          <input
+            type={passwordVisibility ? 'text' : 'password'}
+            name='password'
+            value={userState.password}
+            placeholder='Password...'
+            onChange={handleInputChange}
+            className='w-60 border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 pl-4 pr-10 placeholder:text-[rgb(0,90,0)]'
+          />
+          <button
+            type='button'
+            onClick={() => { setPasswordVisibility(!passwordVisibility); }}
+            className='absolute right-0 text-center p-4'
+          >
+            {passwordVisibility
+              ? (
+                  <FaEyeSlash/>
+                )
+              : (
+                  <FaEye/>
+                )}
+          </button>
+        </div>
       </div>
       <div className=' flex flex-col'>
         <label className='font-bold'>Confirm Password:</label>
-        <input
-          type='password'
-          name='confirmPassword'
-          value={userState.confirmPassword}
-          placeholder='Confirm...'
-          onChange={handleInputChange}
-          className='border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 px-4 placeholder:text-[rgb(0,90,0)]'
-        />
+        <div className='relative'>
+          <input
+            type={confirmVisibility ? 'text' : 'password'}
+            name='confirmPassword'
+            value={userState.confirmPassword}
+            placeholder='Confirm...'
+            onChange={handleInputChange}
+            className='w-60 border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 pl-4 pr-10 placeholder:text-[rgb(0,90,0)]'
+          />
+          <button
+            type='button'
+            onClick={() => { setConfirmVisibility(!confirmVisibility); }}
+            className='absolute right-0 text-center p-4'
+          >
+            {confirmVisibility
+              ? (
+                  <FaEyeSlash/>
+                )
+              : (
+                  <FaEye/>
+                )}
+          </button>
+        </div>
       </div>
       {errorState.length > 0 && (
         <ul>

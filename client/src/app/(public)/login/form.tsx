@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import type { ChangeEvent, FormEvent } from 'react';
 
 const userInitialState: LoginUser = {
@@ -12,6 +13,7 @@ export default function LoginForm (): JSX.Element {
   const router = useRouter();
   const [userState, setUserState] = useState<LoginUser>(userInitialState);
   const [errorState, setErrorState] = useState<string[]>([]);
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
 
   function handleInputChange (e: ChangeEvent<HTMLInputElement>): void {
     setUserState(prevState => {
@@ -48,19 +50,34 @@ export default function LoginForm (): JSX.Element {
           value={userState.username}
           placeholder='User...'
           onChange={handleInputChange}
-          className='border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 px-4 placeholder:text-[rgb(0,90,0)]'
-        />
+          className='w-60 border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 px-4 placeholder:text-[rgb(0,90,0)]'
+          />
       </div>
       <div className=' flex flex-col'>
         <label className='font-bold'>Password:</label>
-        <input
-          type='password'
-          name='password'
-          value={userState.password}
-          placeholder='Password...'
-          onChange={handleInputChange}
-          className='border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 px-4 placeholder:text-[rgb(0,90,0)]'
-        />
+        <div className='relative'>
+          <input
+            type={passwordVisibility ? 'text' : 'password'}
+            name='password'
+            value={userState.password}
+            placeholder='Password...'
+            onChange={handleInputChange}
+            className='w-60 border-4 border-double border-[green] rounded-md bg-transparent outline-none py-2 pl-4 pr-10 placeholder:text-[rgb(0,90,0)]'
+          />
+          <button
+            type='button'
+            onClick={() => { setPasswordVisibility(!passwordVisibility); }}
+            className='absolute right-0 text-center p-4'
+          >
+            {passwordVisibility
+              ? (
+                <FaEyeSlash />
+                )
+              : (
+                <FaEye />
+                )}
+          </button>
+        </div>
       </div>
       {errorState.length > 0 && (
         <ul>
