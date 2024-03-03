@@ -21,6 +21,7 @@ export default function Post ({
   personal: boolean
 }): JSX.Element {
   const [contentState, setContentState] = useState<string>(post.content);
+  const [edited] = useState<boolean>(post.created_at !== post.updated_at);
   const [editing, setEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -95,7 +96,12 @@ export default function Post ({
           >{post.username}</Link>
           {personal && <PostOptions id={post.id} setEditing={setEditing}/>}
         </div>
-        <h2 className=' text-opacity-70 text-[green]'>{new Date(post.created_at).toLocaleDateString('en-us', localDateOptions)}</h2>
+        <div className='relative flex text-opacity-70 text-[green] text-sm gap-2'>
+          {edited
+            ? <span>Updated</span>
+            : <span>Created</span>}
+          <h2>{new Date(post.updated_at).toLocaleDateString('en-us', localDateOptions)}</h2>
+        </div>
         {!editing && <p className='select-text mt-2 break-words'>{post.content}</p>}
         {editing && (
           <div className='relative'>

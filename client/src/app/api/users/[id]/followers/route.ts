@@ -14,7 +14,7 @@ export async function GET (request: NextRequest, { params }: { params: { id: str
     `select u.id, u.username, u.avatar, is_admin from users u 
     inner join follows f on f.follower_id = u.id 
     where f.user_id = $1 
-    order by f.created_at desc limit $2 offset $3`,
+    order by f.updated_at desc limit $2 offset $3`,
     [params.id, limit + 1, offset]
   );
 

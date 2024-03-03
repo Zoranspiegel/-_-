@@ -18,7 +18,7 @@ export async function GET (request: Request): Promise<NextResponse> {
     `select p.*, u.username, u.avatar, u.is_admin from posts p 
     inner join users u on p.user_id = u.id 
     where user_id in (select user_id from follows where follower_id = $1)
-    order by created_at desc limit $2 offset $3`,
+    order by updated_at desc limit $2 offset $3`,
     [userID, limit + 1, offset]
   );
 

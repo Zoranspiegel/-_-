@@ -65,7 +65,7 @@ export async function PATCH (request: Request, { params }: { params: { id: strin
   }
 
   await client.query(
-    'update posts set content = $1 where user_id = $2 and id = $3',
+    'update posts set content = $1, updated_at = now() where user_id = $2 and id = $3',
     [content, jwtPayload?.sub, params.id]
   );
 
