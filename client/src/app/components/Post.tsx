@@ -21,9 +21,15 @@ export default function Post ({
   personal: boolean
 }): JSX.Element {
   const [contentState, setContentState] = useState<string>(post.content);
-  const [edited] = useState<boolean>(post.created_at !== post.updated_at);
+  const [edited, setEdited] = useState<boolean>(false);
   const [editing, setEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (post.created_at !== post.updated_at) {
+      setEdited(true);
+    }
+  }, [post]);
 
   useEffect(() => {
     if (textareaRef.current) {
