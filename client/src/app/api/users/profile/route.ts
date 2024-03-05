@@ -4,14 +4,19 @@ import { NextResponse } from 'next/server';
 
 export async function GET (request: Request): Promise<NextResponse> {
   const jwtPayload = await getJWTPayload();
-  const userID = jwtPayload?.sub;
+
+  if (!jwtPayload?.sub) {
+    return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+  }
+
+  const { id } = JSON.parse(jwtPayload.sub);
 
   const client = getClient();
   await client.connect();
 
   const userProfileRes = await client.query(
     'select id, username, avatar, is_admin from users where id = $1',
-    [userID]
+    [id]
   );
 
   if (userProfileRes.rowCount === 0) {

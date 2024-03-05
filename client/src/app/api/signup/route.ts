@@ -27,7 +27,7 @@ export async function POST (request: Request): Promise<NextResponse> {
   const saltOrRounds = 10;
   const hash = await bcrypt.hash(password, saltOrRounds);
   const newUserRes = await client.query(
-    'insert into users (username, password) values ($1, $2) returning id',
+    'insert into users (username, password) values ($1, $2) returning id, is_admin',
     [username, hash]
   );
 
@@ -38,7 +38,11 @@ export async function POST (request: Request): Promise<NextResponse> {
 
   await client.end();
 
-  const jwtSub: string = newUserRes.rows[0].id;
+  const jwtSub: string = JSON.stringify({
+    id: newUserRes.rows[0].id,
+    is_admin: newUserRes.rows[0].is_admin
+  });
+
   const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET);
   const token = await new SignJWT({})
     .setProtectedHeader({ alg: 'HS256' })

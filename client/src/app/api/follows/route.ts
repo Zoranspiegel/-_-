@@ -12,12 +12,18 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
 
   const jwtPayload = await getJWTPayload();
 
+  if (!jwtPayload?.sub) {
+    return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+  }
+
+  const { id } = JSON.parse(jwtPayload.sub);
+
   const client = getClient();
   await client.connect();
 
   const followsRes = await client.query(
     'select * from follows where user_id = $1 and follower_id = $2',
-    [userID, jwtPayload?.sub]
+    [userID, id]
   );
 
   await client.end();
@@ -31,12 +37,18 @@ export async function POST (request: NextRequest): Promise<NextResponse> {
 
   const jwtPayload = await getJWTPayload();
 
+  if (!jwtPayload?.sub) {
+    return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+  }
+
+  const { id } = JSON.parse(jwtPayload.sub);
+
   const client = getClient();
   await client.connect();
 
   const alreadyFollowedRes = await client.query(
     'select user_id from follows where user_id = $1 and follower_id = $2',
-    [userID, jwtPayload?.sub]
+    [userID, id]
   );
 
   if (alreadyFollowedRes.rowCount) {
@@ -46,7 +58,7 @@ export async function POST (request: NextRequest): Promise<NextResponse> {
 
   await client.query(
     'insert into follows (user_id, follower_id) values ($1, $2)',
-    [userID, jwtPayload?.sub]
+    [userID, id]
   );
 
   await client.end();
@@ -60,12 +72,18 @@ export async function DELETE (request: NextRequest): Promise<NextResponse> {
 
   const jwtPayload = await getJWTPayload();
 
+  if (!jwtPayload?.sub) {
+    return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+  }
+
+  const { id } = JSON.parse(jwtPayload.sub);
+
   const client = getClient();
   await client.connect();
 
   const unfollowUserRes = await client.query(
     'delete from follows where user_id = $1 and follower_id = $2 returning *',
-    [userID, jwtPayload?.sub]
+    [userID, id]
   );
 
   await client.end();

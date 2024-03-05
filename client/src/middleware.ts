@@ -14,6 +14,10 @@ export async function middleware (request: NextRequest): Promise<NextResponse | 
     pathname.startsWith('/api/follows')
   ];
 
+  const authenticatedAdminAPIRoutes = [
+    pathname.startsWith('/api/admin')
+  ];
+
   if (authenticatedAPIRoutes.includes(true)) {
     const cookie = request.cookies.get('jwt-token');
     if (cookie?.value === null || cookie?.value === undefined) {
@@ -24,6 +28,26 @@ export async function middleware (request: NextRequest): Promise<NextResponse | 
       const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET);
       await jwtVerify(cookie?.value, jwtSecret);
     } catch (error) {
+      return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+    }
+  }
+
+  if (authenticatedAdminAPIRoutes.includes(true)) {
+    const cookie = request.cookies.get('jwt-token');
+    if (cookie?.value === null || cookie?.value === undefined) {
+      return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+    }
+
+    const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const { payload } = await jwtVerify(cookie?.value, jwtSecret);
+
+    if (!payload?.sub) {
+      return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+    }
+
+    const { is_admin } = JSON.parse(payload.sub);
+
+    if (!is_admin) {
       return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
     }
   }

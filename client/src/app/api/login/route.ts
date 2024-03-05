@@ -15,7 +15,7 @@ export async function POST (request: Request): Promise<NextResponse> {
   await client.connect();
 
   const loggedUserRes = await client.query(
-    'select id, password from users where username ilike $1',
+    'select id, password, is_admin from users where username ilike $1',
     [username]
   );
 
@@ -34,7 +34,11 @@ export async function POST (request: Request): Promise<NextResponse> {
 
   await client.end();
 
-  const jwtSub: string = loggedUserRes.rows[0].id;
+  const jwtSub: string = JSON.stringify({
+    id: loggedUserRes.rows[0].id,
+    is_admin: loggedUserRes.rows[0].is_admin
+  });
+
   const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET);
   const token = await new SignJWT({})
     .setProtectedHeader({ alg: 'HS256' })

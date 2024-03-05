@@ -10,7 +10,12 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
   const offset = page * limit;
 
   const jwtPayload = await getJWTPayload();
-  const userID = jwtPayload?.sub;
+
+  if (!jwtPayload?.sub) {
+    return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+  }
+
+  const { id } = JSON.parse(jwtPayload.sub);
 
   const client = getClient();
   await client.connect();
@@ -34,7 +39,7 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
       inner join users u on p.user_id = u.id 
       where u.id = $1 
       order by updated_at desc limit $2 offset $3`,
-      [userID, limit + 1, offset]
+      [id, limit + 1, offset]
     );
 
     pages = userPostsRes.rows.slice(0, limit);
@@ -51,7 +56,12 @@ export async function POST (request: Request): Promise<NextResponse> {
   const { content } = reqJSON;
 
   const jwtPayload = await getJWTPayload();
-  const userID = jwtPayload?.sub;
+
+  if (!jwtPayload?.sub) {
+    return NextResponse.json({ error: 'Unauthenticated' }, { status: 403 });
+  }
+
+  const { id } = JSON.parse(jwtPayload.sub);
 
   const client = getClient();
   await client.connect();
@@ -59,7 +69,7 @@ export async function POST (request: Request): Promise<NextResponse> {
   try {
     await client.query(
       'insert into posts (user_id, content) values ($1, $2)',
-      [userID, content]
+      [id, content]
     );
   } catch (error) {
     await client.end();
