@@ -18,13 +18,13 @@ export default function User ({
         href={personal ? '/account' : `/${user.username}`}
         className='flex items-center gap-2'
       >
-        <div className='border-2 border-[green] rounded-full w-[60px] h-[60px] overflow-hidden shrink-0'>
+        <div className='border-2 border-[green] rounded-full w-[70px] h-[70px] overflow-hidden shrink-0'>
           {user.avatar && (
             <Image
               src={user.avatar}
               alt={user.username}
-              width={60}
-              height={60}
+              width={70}
+              height={70}
               className='rounded-full'
             />
           )}

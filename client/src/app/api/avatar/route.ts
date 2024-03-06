@@ -10,7 +10,9 @@ cloudinary.config({
 
 export async function POST (request: Request): Promise<NextResponse> {
   const reqJSON = await request.json();
-  const { avatar, avatarName, userID } = reqJSON;
+  const { avatar, avatarName, userID, is_admin } = reqJSON;
+
+  console.log(is_admin);
 
   if (!avatar || !avatarName) {
     return NextResponse.json({ error: 'Invaild file type' }, { status: 400 });
@@ -34,10 +36,11 @@ export async function POST (request: Request): Promise<NextResponse> {
     const body = {
       img_url: result.secure_url,
       img_name: avatarName,
-      definition: 'low'
+      definition: 'low',
+      color: is_admin ? 'red' : 'green'
     };
 
-    const res = await fetch(process.env.IMG_TO_ASCII_API, {
+    const res = await fetch(process.env.IMG_TO_ASCII_API + '/avatar', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

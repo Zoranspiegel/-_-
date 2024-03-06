@@ -9,7 +9,7 @@ export default function ProfileHeader ({ user }: {
   return (
     <div className='flex justify-between items-center'>
       <div className='flex items-center gap-2'>
-        <div className='w-[80px] h-[80px] flex shrink-0 items-center border-4 border-double border-[green] rounded-full bg-[green] bg-opacity-30 overflow-hidden'>
+        <div className='w-[80px] h-[80px] flex shrink-0 items-start border-4 border-double border-[green] rounded-full bg-[green] bg-opacity-30 overflow-hidden'>
           {user.avatar && (
             <Image
               src={user.avatar}

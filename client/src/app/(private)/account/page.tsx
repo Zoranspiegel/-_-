@@ -18,20 +18,20 @@ export default function AccountPage (): JSX.Element {
           className={`${user.is_admin ? 'text-[red]' : ''} font-bold text-2xl`}
         >{user.username}</h1>
       </div>
-      <div className='border-4 border-double border-[green] rounded-full w-[250px] h-[250px] bg-[green] bg-opacity-20 overflow-hidden'>
+      <div className='border-4 border-double border-[green] rounded-full w-[270px] h-[270px] bg-[green] bg-opacity-20 overflow-hidden'>
         {user.avatar && (
           <Image
             src={user.avatar}
             alt={user.username}
-            width={250}
-            height={250}
+            width={270}
+            height={270}
             priority
             className='rounded-full'
           />
         )}
       </div>
       <div>
-        <AvatarForm userID={user.id} />
+        <AvatarForm userID={user.id} is_admin={user.is_admin} />
       </div>
       <LogoutButton />
     </div>

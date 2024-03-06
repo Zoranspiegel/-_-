@@ -80,15 +80,15 @@ export default function Post ({
     <div className='flex gap-4 mb-4'>
       <Link
         href={personal ? '/account' : `/${post.username}`}
-        className='flex flex-col h-[60px] rounded-full'
+        className='flex flex-col h-[70px] rounded-full'
       >
-        <div className='border-2 border-[green] rounded-full bg-[rgba(0,130,0,0.3)] w-[60px] h-[60px] overflow-hidden'>
+        <div className='border-2 border-[green] rounded-full bg-[rgba(0,130,0,0.3)] w-[70px] h-[70px] overflow-hidden'>
           {post.avatar && (
             <Image
               src={post.avatar}
               alt={post.username}
-              width={60}
-              height={60}
+              width={70}
+              height={70}
               className='rounded-full'
             />
           )}

@@ -30,13 +30,13 @@ export default function Header (): JSX.Element {
             >{part}</span>
           ))}
         </div>
-        <div className='w-[60px] h-[60px] border-2 border-[green] rounded-full bg-[green] bg-opacity-30 overflow-hidden'>
+        <div className='w-[70px] h-[70px] border-2 border-[green] rounded-full bg-[green] bg-opacity-30 overflow-hidden'>
           {user.avatar && (
             <Image
               src={user.avatar}
               alt={user.username}
-              width={60}
-              height={60}
+              width={70}
+              height={70}
               className='rounded-full'
             />
           )}

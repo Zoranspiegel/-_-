@@ -6,7 +6,10 @@ interface Avatar {
   name: string
 }
 
-export default function AvatarForm ({ userID }: { userID: string }): JSX.Element {
+export default function AvatarForm ({ userID, is_admin }: {
+  userID: string
+  is_admin: boolean
+}): JSX.Element {
   const [avatar, setAvatar] = useState<Avatar | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -32,7 +35,7 @@ export default function AvatarForm ({ userID }: { userID: string }): JSX.Element
     e.preventDefault();
     const res = await fetch('/api/avatar', {
       method: 'POST',
-      body: JSON.stringify({ avatar: avatar?.file, avatarName: avatar?.name.split('.')[0], userID })
+      body: JSON.stringify({ avatar: avatar?.file, avatarName: avatar?.name.split('.')[0], userID, is_admin })
     });
 
     if (res.ok) {
