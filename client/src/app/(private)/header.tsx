@@ -3,13 +3,18 @@ import LoadingHeader from '../components/LoadingHeader';
 import ErrorHeader from '../components/ErrorHeader';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { splitUsername } from '../utils/splitUsername';
 
 export default function Header (): JSX.Element {
+  const router = useRouter();
   const { data, isLoading, error } = useSWR('/api/users/profile');
 
   if (isLoading) return <LoadingHeader />;
-  if (error) return <ErrorHeader />;
+  if (error) {
+    router.push('/');
+    return <ErrorHeader />;
+  };
 
   const user: UserProfile = data;
 
