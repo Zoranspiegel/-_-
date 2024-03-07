@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import useSWR from 'swr';
 import { debounce } from 'lodash';
 import UserSearch from '@/app/components/UserSearch';
+import { usePrivateContext } from '@/app/contexts/PrivateContext';
 
 export default function SearchUsers (): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [visibility, setVisibility] = useState<boolean>(false);
-
-  const { data, isLoading, error } = useSWR('/api/users/profile');
+  const userCtx = usePrivateContext();
 
   useEffect(() => {
     function handleClickOutside (e: MouseEvent): void {
@@ -25,8 +24,7 @@ export default function SearchUsers (): JSX.Element {
     };
   });
 
-  if (isLoading) return <div className='flex'><input type='text' className='searchInput' placeholder='Loading...' /></div>;
-  if (error) return <div>Error</div>;
+  if (!userCtx) return <div className='flex'><input type='text' className='searchInput' placeholder='Loading...' /></div>;
 
   async function searchUsers (username: string): Promise<void> {
     const res = await fetch(`/api/users/search?username=${username}`);
@@ -86,7 +84,7 @@ export default function SearchUsers (): JSX.Element {
             >
               <UserSearch
                 user={user}
-                personal={data.id === user.id}
+                personal={userCtx.id === user.id}
               />
             </li>
           ))}

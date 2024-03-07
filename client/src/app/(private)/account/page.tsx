@@ -1,16 +1,13 @@
 'use client';
-import useSWR from 'swr';
 import Image from 'next/image';
 import AvatarForm from './avatar-form';
 import LogoutButton from './logout-button';
+import { usePrivateContext } from '@/app/contexts/PrivateContext';
 
 export default function AccountPage (): JSX.Element {
-  const { data, isLoading, error } = useSWR('/api/users/profile');
+  const user = usePrivateContext();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
-
-  const user: UserProfile = data;
+  if (!user) return <div>Loading...</div>;
   return (
     <div className='min-w-full flex flex-col flex-grow justify-between items-center p-4 gap-6'>
       <div>

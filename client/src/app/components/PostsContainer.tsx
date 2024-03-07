@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import Post from './Post';
+import { usePrivateContext } from '../contexts/PrivateContext';
 
 export default function PostsContainer ({
   page,
@@ -16,11 +17,11 @@ export default function PostsContainer ({
   lastPage: boolean
   setLastPage: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element {
-  const { data: loggedUser, isLoading: userLoading, error: userError } = useSWR('/api/users/profile');
+  const loggedUser = usePrivateContext();
   const { data, isLoading, error } = useSWR(() => `${url}?page=${page}${search ? `&content=${search}` : ''}${username ? `&username=${username}` : ''}`);
 
-  if (userLoading || isLoading) return <div>Loading...</div>;
-  if (userError || error) return <div>Error</div>;
+  if (!loggedUser || isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error</div>;
 
   const posts: Post[] = data.pages;
   const last: boolean = data.last;

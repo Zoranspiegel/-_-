@@ -1,17 +1,14 @@
 'use client';
 import { useState } from 'react';
-import useSWR from 'swr';
 import UsersContainer from '@/app/components/UsersContainer';
+import { usePrivateContext } from '@/app/contexts/PrivateContext';
 
 export default function Followers (): JSX.Element {
   const [page, setPage] = useState<number>(1);
   const [lastPage, setLastPage] = useState<boolean>(false);
-  const { data, isLoading, error } = useSWR('/api/users/profile');
+  const loggedUser = usePrivateContext();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
-
-  const loggedUser: UserProfile = data;
+  if (!loggedUser) return <div>Loading...</div>;
 
   const pages = [];
   for (let i = 0; i < page; i++) {

@@ -1,27 +1,18 @@
-import useSWR from 'swr';
-import LoadingHeader from '../components/LoadingHeader';
-import ErrorHeader from '../components/ErrorHeader';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { splitUsername } from '../utils/splitUsername';
+import { usePrivateContext } from '@/app/contexts/PrivateContext';
+import LoadingHeader from '../components/LoadingHeader';
 
 export default function Header (): JSX.Element {
-  const router = useRouter();
-  const { data, isLoading, error } = useSWR('/api/users/profile');
+  const user = usePrivateContext();
 
-  if (isLoading) return <LoadingHeader />;
-  if (error) {
-    router.push('/');
-    return <ErrorHeader />;
-  };
-
-  const user: UserProfile = data;
+  if (!user) return <LoadingHeader />;
 
   const usernameParts = splitUsername(user.username);
   return (
     <header
-      className='w-full max-w-md h-[9vh] flex justify-between items-center border-4 border-double border-[green] rounded-lg bg-black bg-opacity-70 px-2'
+      className='w-full max-w-md h-[10vh] flex justify-between items-center border-4 border-double border-[green] rounded-lg bg-black bg-opacity-70 px-2'
     >
       <div className='px-4'>Мрачне тајне</div>
       <Link
