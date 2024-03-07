@@ -50,7 +50,6 @@ export default function PostOptions ({ id, setEditing }: {
           className='absolute top-0 right-0 w-10 flex flex-col border-[green] border-4 border-double rounded-md bg-[rgb(0,20,0)] p-2 gap-6'
         >
           <BsPencilSquare
-            // onClick={() => { router.push(`/edit_post/${id}`); }}
             onClick={() => {
               setEditing(true);
               setOptionsVisibility(false);
@@ -66,7 +65,7 @@ export default function PostOptions ({ id, setEditing }: {
       {deleteVisibility && (
         <div
           ref={deleteRef}
-          className='absolute right-10 top-0 w-60 border-[green] border-4 border-double rounded-lg bg-[rgb(0,20,0)] p-2 text-center'
+          className='absolute right-10 top-0 w-60 border-[green] border-4 border-double rounded-lg bg-[rgb(0,20,0)] z-10 p-2 text-center'
         >
           <p className='mb-3'>Confirm deletion</p>
           <div className='flex justify-evenly'>

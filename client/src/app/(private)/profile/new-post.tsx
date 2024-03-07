@@ -35,7 +35,7 @@ export default function NewPost ({ setLastPage }: {
         rows={4}
         value={content}
         onChange={handleChange}
-        placeholder='Reveal your secret...'
+        placeholder='Tell your secret...'
         className='w-full border-4 border-double border-[green] rounded-lg bg-[green] bg-opacity-20 p-4 resize-none outline-none placeholder:text-[green] placeholder:text-opacity-70'
       />
       <button
