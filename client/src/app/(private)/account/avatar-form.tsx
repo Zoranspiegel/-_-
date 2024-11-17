@@ -28,7 +28,7 @@ export default function AvatarForm ({ userID, is_admin }: {
       });
     };
 
-    reader.readAsDataURL(new Blob([file]));
+    reader.readAsDataURL(file);
   }
 
   async function handleSubmit (e: React.FormEvent): Promise<void> {
